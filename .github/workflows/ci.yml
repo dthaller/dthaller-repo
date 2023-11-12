@@ -11,8 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      PIP_INDEX_URL: "https://${{ secrets.ARTIFACTORY_USER }}:${{ secrets.ARTIFACTORY_PASSWORD }}@sstp.jfrog.io/artifactory/api/pypi/pypi/simple"
 
     steps:
       - name: "Checkout the project..."
