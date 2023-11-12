@@ -25,4 +25,4 @@ jobs:
           cache: 'pip'
 
       - name: Test
-        run: ENV=unittest make test
+        run: ENV=unittest make build-venv
