@@ -1,0 +1,30 @@
+SOURCE_FILES=$(shell find . -name \*.py -not -path ./build/\* -not -path ./venv/\* -not -path ./.venv/\* -not -path ./tests/\*)
+TEST_FILES=$(shell find tests -name \*.py)
+ENV=dev
+
+
+.PHONY: synth deploy test diff clean
+
+deploy: deploy-securitymaster
+
+clean:
+	-rm -rf build
+
+build/venv: requirements.txt
+	python -m venv build/venv
+	. build/venv/bin/activate && pip install -r requirements.txt
+
+deploy-securitymaster: build/venv
+	. build/venv/bin/activate && ENVIRONMENT=$(ENV) cdk deploy securitymaster --require-approval never
+
+diff: build/venv
+	. build/venv/bin/activate && ENVIRONMENT=$(ENV) cdk diff $(STACK)
+
+buildtest: python -m venv build/test_venv
+	. build/test_venv/bin/activate && pip install -r ./requirements.txt
+
+test2:
+    build/test_venv/bin/activate
+
+clean:
+	-rm -rf build/
